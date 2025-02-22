@@ -61,6 +61,7 @@ Modelos suportados:
 1) Se você encontrar algum erro relacionado ao HIDAPI ou ao psutil, certifique-se de que as dependências estejam instaladas corretamente executando o script setup.sh.
 2) Certifique-se de que o Water Cooler Rise Mode Aura Ice esteja conectado corretamente ao seu sistema.
 
-Credits
+Créditos:
 https://github.com/raghulkrishna/deepcool-ak620-digital-linux
+
 https://github.com/Algorithm0/deepcool-digital-info
