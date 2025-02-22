@@ -62,6 +62,7 @@ Modelos suportados:
 2) Certifique-se de que o Water Cooler Rise Mode Aura Ice esteja conectado corretamente ao seu sistema.
 
 Créditos:
+
 https://github.com/raghulkrishna/deepcool-ak620-digital-linux
 
 https://github.com/Algorithm0/deepcool-digital-info
