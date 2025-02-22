@@ -1,0 +1,11 @@
+[Unit]
+Description=Exibi a temperatura atual no Water Cooler Rise Mode Aura Ice
+
+[Service]
+Type=simple
+User=root
+ExecStart= /usr/bin/python /usr/bin/risemode.py
+Restart=always
+
+[Install]
+WantedBy=default.target
