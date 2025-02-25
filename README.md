@@ -53,7 +53,7 @@ Modelos suportados:
 6. **Execute o script de instalação**: O script `install.sh` automatizará o processo de instalação. Execute o script executando:
 
     ```bash
-    ./setup.sh
+    ./install.sh
     ```
 
 ## Solução de problemas
