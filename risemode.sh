@@ -15,7 +15,7 @@ for f in $FILES; do
 done
 
 function get_temp {
-	TEMP="$(sensors 2>/dev/null | grep -oP 'CPU.*?\+\K[0-9]+')"
+	TEMP="$(sensors 2>/dev/null | grep -oP 'Tctl.*?\+\K[0-9]+')"
 	TEMP="$(printf '%x\n' $TEMP)"
 }
 
