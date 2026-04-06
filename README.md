@@ -45,3 +45,4 @@ Modelos suportados:
 
 1) Se você encontrar algum erro relacionado as temperaturas, certifique-se de que o pacote lm-sensors esteja instalado corretamente.
 2) Certifique-se de que o Water Cooler Rise Mode Aura Ice esteja conectado corretamente ao seu sistema.
+3) Certifique-se que os aruivos install.sh, remove.sh, e risemode.sh tem permissão de execução. 
