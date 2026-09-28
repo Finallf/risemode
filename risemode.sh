@@ -4,23 +4,35 @@ VENDOR_ID=AA88	# Rise Mode Aura Ice 0xAA88
 PRODUCT_ID=8666	# Rise Mode Aura Ice 0x8666
 FILES=/dev/hidraw*
 
+
 for f in $FILES; do
 	FILE=${f##*/}
-	VID="$(cat /sys/class/hidraw/${FILE}/device/uevent | grep -oP 'HID_ID.{10}\K.{4}')"
-	PID="$(cat /sys/class/hidraw/${FILE}/device/uevent | grep -oP 'HID_ID.{19}\K.{4}')"
-	if [ $VID == $VENDOR_ID ] && [ $PID == $PRODUCT_ID ]; then
-		HIDRAW=$FILE
+	VID="$(grep -oP 'HID_ID.{10}\K.{4}' "/sys/class/hidraw/${FILE}/device/uevent")"
+	PID="$(grep -oP 'HID_ID.{19}\K.{4}' "/sys/class/hidraw/${FILE}/device/uevent")"
+	if [[ $VID == "$VENDOR_ID" && $PID == "$PRODUCT_ID" ]]; then
+		HIDRAW="/dev/$FILE"
 		break
 	fi
 done
 
-function get_temp {
-	TEMP="$(sensors 2>/dev/null | grep -oP 'Tctl.*?\+\K[0-9]+')"
-	TEMP="$(printf '%x\n' $TEMP)"
+get_temp() {
+	local temperature
+	temperature="$(sensors 2>/dev/null | awk '
+		/^Package id 0:/ { gsub(/[^0-9.]/, "", $4); print int($4); exit }
+		/^CPU:[[:space:]]/ { gsub(/[^0-9.]/, "", $2); print int($2); exit }
+	')"
+
+	if [[ $temperature =~ ^[0-9]+$ ]]; then
+		printf -v TEMP '%02x' "$temperature"
+		return 0
+	fi
+
+	return 1
 }
 
 while :; do
-	get_temp
-	echo -e \\x${TEMP} > /dev/${HIDRAW}
+	if [[ -n ${HIDRAW:-} ]] && get_temp; then
+		printf '%b' "\\x$TEMP\\0\\0\\0\\0\\0\\0\\0\\0\\0" > "$HIDRAW"
+	fi
 	sleep 2.1
 done
