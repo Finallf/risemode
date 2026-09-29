@@ -37,6 +37,9 @@ echo "         Copiando unit service para /etc/systemd/system/..."
 cp -f "${SCRIPT_DIR}/risemode.service" /etc/systemd/system/risemode.service
 chmod 644 /etc/systemd/system/risemode.service
 
+# Remove unit legada caso exista de instalações antigas
+rm -f /lib/systemd/system/risemode.service 2>/dev/null
+
 echo "         Recarregando systemd..."
 systemctl daemon-reload
 

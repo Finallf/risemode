@@ -12,8 +12,15 @@ while [ $# -gt 0 ]; do
 		--reset|-r)
 			MODE="reset"
 			if [ -n "$2" ] && [[ "$2" =~ ^[0-9]+$ ]]; then
+				if (( $2 < 0 || $2 > 255 )); then
+					echo "Erro: O valor de reset deve ser um número inteiro entre 0 e 255." >&2
+					exit 1
+				fi
 				RESET_VAL="$2"
 				shift 2
+			elif [ -n "$2" ] && [[ "$2" =~ ^-[0-9]+$ ]]; then
+				echo "Erro: O valor de reset deve ser um número inteiro entre 0 e 255." >&2
+				exit 1
 			else
 				RESET_VAL="0"
 				shift
@@ -22,8 +29,8 @@ while [ $# -gt 0 ]; do
 		--reset=*)
 			MODE="reset"
 			RESET_VAL="${1#*=}"
-			if ! [[ "$RESET_VAL" =~ ^[0-9]+$ ]]; then
-				echo "Erro: O valor de reset deve ser numérico." >&2
+			if ! [[ "$RESET_VAL" =~ ^[0-9]+$ ]] || (( RESET_VAL < 0 || RESET_VAL > 255 )); then
+				echo "Erro: O valor de reset deve ser um número inteiro entre 0 e 255." >&2
 				exit 1
 			fi
 			shift
@@ -32,7 +39,7 @@ while [ $# -gt 0 ]; do
 			echo "Uso: $0 [--daemon|-d] [--reset|-r [VALOR]] [--help|-h]"
 			echo "  Sem argumentos        : Exibe diagnóstico (temperatura, device, hex)."
 			echo "  --daemon, -d          : Executa em segundo plano atualizando continuamente o display."
-			echo "  --reset, -r [NUM]     : Envia NUM (padrão: 0) para o display e finaliza."
+			echo "  --reset, -r [NUM]     : Envia NUM (0-255, padrão: 0) para o display e finaliza."
 			exit 0
 			;;
 		*)
