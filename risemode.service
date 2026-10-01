@@ -4,8 +4,8 @@ Description=Exibi a temperatura do CPU no Water Cooler Rise Mode Aura Ice
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/risemode
+ExecStart=/usr/bin/risemode -d
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
